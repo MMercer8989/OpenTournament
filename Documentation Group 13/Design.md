@@ -8,4 +8,8 @@
 
 3/23/2021 - Committed changes to BP_Widget_OptionsMenu.uasset to include our studio menu when the studio button is pressed.
 
-3/29/2021 - Commited changes to BP_Studio_Options to re-design layout of menu in order to accomodate the menu being populated with customization options. Minor menu design tweaks included as well
+3/29/2021 - Committed changes to BP_Studio_Options to re-design layout of menu in order to accomodate the menu being populated with customization options. Minor menu design tweaks included as well
+
+4/7/2021 -  Committed further changes to BP_Studio_Options to populate the shield icon options in the studio menu.
+
+4/8/2021 -  Committed further changes to BP_Studio_Options to populate the ammo icon options in the studio menu.
