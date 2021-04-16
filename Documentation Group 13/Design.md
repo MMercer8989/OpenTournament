@@ -9,3 +9,23 @@
 3/18/2021 - Commited a file creation of UI_Crosshair_Custom to create a new custom crosshair for the system. Also, I had to modify the UI_Crosshair1 to add this custom crosshair into the sytem
 
 3/23/2021 - Committed changes to BP_Widget_OptionsMenu.uasset to include our studio menu when the studio button is pressed.
+
+3/29/2021 - Commited changes to BP_Studio_Options to re-design layout of menu in order to accomodate the menu being populated with customization options. Minor menu design tweaks included as well
+
+4/8/2021 - Commited changes to Skin_Importing to make a new skin for the Hammer so users get more skin options for their weapons.
+
+4/10/2021 - Commited changes to Weapon_Skins to make a new skin for the Hammer so users get more skin options for their weapons.
+
+4/10/2021 - Commited changes to Weapon_Skins to make four new skins for the AssaultRifle so users get more skin options for their weapons.
+
+4/11/2021 - Commited changes to Weapon_Skins to make four new skins for the BlobGun so users get more skin options for their weapons.
+
+4/12/2021 - Commited changes to Weapon_Skins to make four new skins for the Cannon so users can have more skins options to choose.
+
+4/12/2021 - Commited changes to Weapon_Skins to make four new skins for the EnergyRifle so users can have more skins options to choose. 
+
+4/12/2021 - Commited changes to Weapon_Skins to make two new skin options as well as four total energy emitters for the EnergyRifleIG so users can have more options to choose.
+
+4/14/2021 - Commited changes to Weapon_Skins to make two small and 2 regular new skin options for the Pistol for more skin options for users to choose from than just the defaults.
+
+4/14/2021 - Commited changes to Weapon_Skins to make two small and 2 regular new skin options for the PlasmaRifle for more skin options for users to choose from than just the defaults.
