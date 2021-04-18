@@ -49,7 +49,12 @@ void AUR_PlayerState::AddKill(AController* Victim)
     //TODO: count multi kills here
     //TODO: count sprees here
     CurrentStreak++;
+    if (CurrentStreak == 3)
+        Sprees++;
     //NOTE: can do "revenge" here
+    AUR_PlayerState * checkSprees = Victim->GetPlayerState<class AUR_PlayerState>();
+    if (checkSprees->CurrentStreak >= 3)
+        Revenges++;
 }
 
 void AUR_PlayerState::AddDeath(AController* Killer)
@@ -57,7 +62,8 @@ void AUR_PlayerState::AddDeath(AController* Killer)
     Deaths++;
     CurrentStreak = 0;
     if (CurrentStreak > MaxSpreeLength)
-        MaxSpreeLength = CurrentStreak
+        MaxSpreeLength = CurrentStreak;
+
     MARK_PROPERTY_DIRTY_FROM_NAME(AUR_PlayerState, Deaths, this);
 
     //TODO: spree ended by killer here
