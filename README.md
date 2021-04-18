@@ -1,9 +1,9 @@
-Project Info / Documentation:
+PROJECT INFO / DOCUMENTATION:
 -- Original project readme can be found under the 'Documentation Group 13' folder
 -- User stories document which includes tasks, and members assigned to each task is in the 'Documentation Group 13' folder
 -- Design.md can be found within the 'Documentation Group 13' folder as well
 
-Test Coverage, and Implementation:
+TEST COVERAGE, AND IMPLEMENTATION:
 -- Original coverage for UI changes made regarding icons etc is included in pull request reviews, as the UI changes would be viewed before the pull request is approved.
 This was done due to the fact it is very difficult to observe changes made to Uasset files within github itself.
 
