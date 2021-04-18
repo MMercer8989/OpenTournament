@@ -46,15 +46,18 @@ void AUR_PlayerState::AddKill(AController* Victim)
 {
     Kills++;
     MARK_PROPERTY_DIRTY_FROM_NAME(AUR_PlayerState, Kills, this);
-
     //TODO: count multi kills here
     //TODO: count sprees here
+    CurrentStreak++;
     //NOTE: can do "revenge" here
 }
 
 void AUR_PlayerState::AddDeath(AController* Killer)
 {
     Deaths++;
+    CurrentStreak = 0;
+    if (CurrentStreak > MaxSpreeLength)
+        MaxSpreeLength = CurrentStreak
     MARK_PROPERTY_DIRTY_FROM_NAME(AUR_PlayerState, Deaths, this);
 
     //TODO: spree ended by killer here

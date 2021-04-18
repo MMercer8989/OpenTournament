@@ -45,6 +45,21 @@ public:
     int32 Kills;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 Sprees;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 MaxSpreeLength;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 Revenges;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 Multikills;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 CurrentStreak;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
     int32 Deaths;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
