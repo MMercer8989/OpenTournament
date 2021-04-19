@@ -15,6 +15,9 @@
 #include "UR_FunctionLibrary.h"
 #include "UR_Character.h"
 #include <time.h>
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
+#include <string>
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_PlayerState::AUR_PlayerState()
@@ -67,15 +70,21 @@ void AUR_PlayerState::AddKill(AController* Victim)
     if (CurrentStreak == 3)
         Sprees++;
     //NOTE: can do "revenge" here
-    AUR_PlayerState * checkSprees = Victim->GetPlayerState<class AUR_PlayerState>();
-    if (checkSprees->CurrentStreak >= 3)
+    AUR_PlayerState * checkVictimSprees = Victim->GetPlayerState<class AUR_PlayerState>();
+    if (checkVictimSprees->CurrentStreak >= 3) {
         Revenges++;
+        FString victimName = checkVictimSprees->GetPlayerName();
+        FString killerName = this->GetPlayerName();
+
+        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(killerName.Append(shutdownMessage[1][rand() % 4 + 0])));
+    }
 }
 
 void AUR_PlayerState::AddDeath(AController* Killer)
 {
     Deaths++;
     CurrentStreak = 0;
+    MultiKillTick = 0;
     if (CurrentStreak > MaxSpreeLength)
         MaxSpreeLength = CurrentStreak;
 
