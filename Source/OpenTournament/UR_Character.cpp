@@ -28,6 +28,10 @@
 #include "UR_InputComponent.h"
 #include "UR_UserSettings.h"
 
+//include statements so we will have access to functions for printing text on screen
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
+#include <string>
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_Character::AUR_Character(const FObjectInitializer& ObjectInitializer) :
@@ -841,6 +845,38 @@ float AUR_Character::TakeDamage(float Damage, FDamageEvent const& DamageEvent, A
 
     if (AttributeSet && AttributeSet->Health.GetCurrentValue() <= 0)
     {
+        //display a death message here perhaps?
+
+        std::string DeathMessagesSuicide[5][7] = {
+            {}, //Rocket launcher Suicide messages
+            {}, //Flac cannon suicide messages
+            {}, //plasma gun suicide messages
+            {}, //grenade launcher suicide messages
+            {} //generic suicide messages
+        };
+
+        //here we will place the death messages to be output to the screen, these should be split into a few different categories
+        //depending on who the killer is
+        if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Shotgun")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_CannonBall")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_EnergyBall")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Grenade")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
+        }
+        //else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_SniperRifle")) {
+           // GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
+       // }
+        
+        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString(DamageCauser->GetActorLabel())); //debug message to see what the actors name is
         // Can use DamageRemaining here to GIB
         Die(EventInstigator, DamageEvent, DamageCauser);
     }
