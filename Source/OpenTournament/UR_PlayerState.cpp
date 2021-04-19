@@ -14,7 +14,7 @@
 #include "UR_MPC_Global.h"
 #include "UR_FunctionLibrary.h"
 #include "UR_Character.h"
-
+#include <time.h>
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_PlayerState::AUR_PlayerState()
@@ -47,6 +47,21 @@ void AUR_PlayerState::AddKill(AController* Victim)
     Kills++;
     MARK_PROPERTY_DIRTY_FROM_NAME(AUR_PlayerState, Kills, this);
     //TODO: count multi kills here
+    MultiKillTick++;
+    if (MultiKillTick == 1)
+        KillTime = time(NULL);
+    else {
+        if (time(NULL) - KillTime > 5) {
+            MultiKillTick = 1;
+            KillTime = time(NULL);
+        }
+        else
+            KillTime = time(NULL);
+        if (MultiKillTick > MaxMultiKill)
+            MaxMultiKill = MultiKillTick;
+    }
+    if (MultiKillTick > 1)
+        MultiKills++;
     //TODO: count sprees here
     CurrentStreak++;
     if (CurrentStreak == 3)

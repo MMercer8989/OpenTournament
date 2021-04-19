@@ -7,7 +7,7 @@
 #include "GameFramework/PlayerState.h"
 #include "Interfaces/UR_TeamInterface.h"
 #include "UR_PlayerState.generated.h"
-
+#include <time.h>
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 class AUR_PlayerState;
@@ -54,7 +54,16 @@ public:
     int32 Revenges;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
-    int32 Multikills;
+    int32 MultiKills;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 MultiKillTick;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    time_t KillTime;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 MaxMultiKill;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
     int32 CurrentStreak;
