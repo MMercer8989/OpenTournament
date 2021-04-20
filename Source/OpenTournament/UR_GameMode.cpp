@@ -20,6 +20,12 @@
 #include "UR_TeamInfo.h"
 #include "GameFramework/Controller.h"
 
+//include statements so we will have access to functions for printing text on screen
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
+#include <string>
+#include <stdlib.h>
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_GameMode::AUR_GameMode()
@@ -315,13 +321,92 @@ bool AUR_GameMode::PreventDeath_Implementation(AController* Killed, AController*
 * We have to be careful as Blueprints cannot choose specifically which Super() method to call.
 */
 
+void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser) {
+
+    //get the local players name (this will be attached to the front of most death messages)
+    FString playerName = "player"; //placeholder for now
+    FString victimName = Victim->GetName();;
+    FString killerName = Killer->GetName();
+
+    FString suicideMessage[5][5] = {
+        {" blew themselves to bits", " got too close to the rockets", "'s head has been blown apart", " is now a smoldering pile of viscera", " has been GIBBED... by their own doing"}, //Rocket launcher Suicide messages
+        {" couldn't handle the flac cannon", ", flac cannons hurt dont they", " took a facefull of shrapnel", " has transitioned to swiss cheese"}, //Flac cannon suicide messages
+        {" has electrified themself", " has experienced unlimited power...", " has rode the lightning", " vaporized themself"}, //plasma gun suicide messages
+        {" just played around with their own grenade", " fragged themself", " thought it would be best to blow their arms off", " decided to eat a live grenade"}, //grenade launcher suicide messages
+        {" just gave up", " couldn't handle life", " said 'right, that's enough...'", " has had enough"} //generic suicide messages
+    };
+
+    FString StandardKillMessage[5][5] = {
+        {" Just got fragged by ", " Just got their skull cleaved by a passing rocket thanks to ", " just got lit up by ", " couldn't outrun the rockets from ", " has been GIBBED by "}, //Rocket Launcher
+        {" ate some flac, courtesy of ", " took on the flac cannon and lost thanks to ", " got filled full of holes by ", " just got dumpstered thanks to ", " has become swiss cheese thanks to "}, //Flac Cannon
+        {" has just been discombobulated by ", " has just been fried by ", " has been burnt to a crisp by ", " has been vaporized by ", " is now a smoldering pile of ash thanks to "}, //Plasma gun
+        {" tripped over a grenade placed by ", " was dismembered thanks to ", " was ripped apart by a grenade thanks to ", " is now suffering from full body failure thanks to ", " has been bombed by "}, //grenade launcher
+        {" just got fragged by ", " has been taken down by ", " has been filled full of hot lead by ", " has been killed by ", " has suffered defeat at the hands of "} //generic
+
+    };
+
+    FString MiscKillMessage[5] = {" has been killed... by the arena, ouch", " has been fragged... by the stage?", " has died", " has been discombobulated", " has been rendered helpless by the arena"};
+
+    //here we will place the death messages to be output to the screen, these should be split into a few different categories
+    //depending on who the killer is
+
+    if (!Killer || Killer == Victim) {
+        //suicide messages go here
+        if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[0][rand() % 4 + 0])));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Shotgun")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 4 + 0])));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_CannonBall")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 4 + 0])));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_EnergyBall")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[2][rand() % 4 + 0])));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Grenade")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[3][rand() % 4 + 0])));
+        }
+        else {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[4][rand() % 4 + 0])));
+        }
+    }
+    else if (Killer && Killer != Victim) {
+        //regular kills
+        if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[0][rand() % 4 + 0]).Append(killerName)));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Shotgun")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[1][rand() % 4 + 0]).Append(killerName)));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_CannonBall")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[1][rand() % 4 + 0]).Append(killerName)));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_EnergyBall")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[2][rand() % 4 + 0]).Append(killerName)));
+        }
+        else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Grenade")) {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[3][rand() % 4 + 0]).Append(killerName)));
+        }
+        else {
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[4][rand() % 4 + 0]).Append(killerName)));
+        }
+    }
+    else {
+        //other
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(MiscKillMessage[rand() % 4 + 0])));
+    }
+}
+
 void AUR_GameMode::PlayerKilled_Implementation(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser)
 {
-    RegisterKill(Victim, Killer, DamageEvent, DamageCauser);
+    DeathMessage(Victim, Killer, DamageEvent, DamageCauser); //call a function to display the public death messages
+    RegisterKill(Victim, Killer, DamageEvent, DamageCauser); 
 }
 
 void AUR_GameMode::RegisterKill(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser)
 {
+    //the death messages mentioned in here seem only to apply to the scoreboard
     if (Victim)
     {
         AUR_PlayerState* VictimPS = Victim->GetPlayerState<AUR_PlayerState>();

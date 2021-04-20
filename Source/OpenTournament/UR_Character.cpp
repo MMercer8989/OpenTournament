@@ -28,11 +28,6 @@
 #include "UR_InputComponent.h"
 #include "UR_UserSettings.h"
 
-//include statements so we will have access to functions for printing text on screen
-#include <EngineGlobals.h>
-#include <Runtime/Engine/Classes/Engine/Engine.h>
-#include <string>
-#include <stdlib.h>
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_Character::AUR_Character(const FObjectInitializer& ObjectInitializer) :
@@ -846,8 +841,6 @@ float AUR_Character::TakeDamage(float Damage, FDamageEvent const& DamageEvent, A
 
     if (AttributeSet && AttributeSet->Health.GetCurrentValue() <= 0)
     {
-        //display a death message here perhaps?
-
         // Can use DamageRemaining here to GIB
         Die(EventInstigator, DamageEvent, DamageCauser);
     }
@@ -855,49 +848,8 @@ float AUR_Character::TakeDamage(float Damage, FDamageEvent const& DamageEvent, A
     return Damage;
 }
 
-void AUR_Character::DeathMessage(AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser) {
-
-    //get the local players name (this will be attached to the front of most death messages)
-    //FString playerName = APlayerState().GetPlayerName();
-    FString playerName = AttributeSet->GetOwningActor()->GetActorLabel(); //returns BP_UR_Character
-
-    FString suicideMessage[5][5] = {
-        {" blew themselves to bits", " got too close to the rockets", "'s head has been blown apart", " is now a smoldering pile of viscera", " has been GIBBED... by their own doing"}, //Rocket launcher Suicide messages
-        {" couldn't handle the flac cannon", ", flac cannons hurt dont they", " took a facefull of shrapnel", " has transitioned to swiss cheese"}, //Flac cannon suicide messages
-        {" has electrified themself", " has experienced unlimited power...", " has rode the lightning", " vaporized themself"}, //plasma gun suicide messages
-        {" just played around with their own grenade", " fragged themself", " though it would be best to blow their arms off", " decided to eat a live grenade"}, //grenade launcher suicide messages
-        {" just gave up", " couldn't handle life", " said 'right, that's enough...'", " has had enough"} //generic suicide messages
-    };
-
-    //here we will place the death messages to be output to the screen, these should be split into a few different categories
-    //depending on who the killer is
-    if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
-        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
-        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[0][rand() % 4 + 0])));
-    }
-    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Shotgun")) {
-        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
-        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 4 + 0])));
-    }
-    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_CannonBall")) {
-        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
-        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 4 + 0])));
-    }
-    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_EnergyBall")) {
-        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
-        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[2][rand() % 4 + 0])));
-    }
-    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Grenade")) {
-        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(DamageCauser->GetActorLabel()));
-        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[3][rand() % 4 + 0])));
-    }
-
-}
-
 void AUR_Character::Die(AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser)
 {
-    DeathMessage(Killer, DamageEvent, DamageCauser); //first display the death message
-
     // Already killed (might happen when multiple damage sources in 1 frame)
     if (GetTearOff() || IsPendingKillPending())
     {

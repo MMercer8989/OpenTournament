@@ -577,11 +577,6 @@ public:
     */
     virtual float TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-    /*
-     Display a message when a character is killed
-    */
-    void DeathMessage(AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser);
-
     /**
     * Kill this player.
     * Authority only.
