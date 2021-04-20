@@ -73,10 +73,11 @@ void AUR_PlayerState::AddKill(AController* Victim)
     AUR_PlayerState * checkVictimSprees = Victim->GetPlayerState<class AUR_PlayerState>();
     if (checkVictimSprees->CurrentStreak >= 3) {
         Revenges++;
-        FString victimName = checkVictimSprees->GetPlayerName();
-        FString killerName = this->GetPlayerName();
+        //TODO: once player tags, and names have been fully implemented, and defined, get and display the killer, and victim's player names in the shutdown message
 
-        //GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(killerName.Append(shutdownMessage[1][rand() % 4 + 0])));
+        FString shutdownMessage[4] = {"Their spree is OVER!", "KINGSLAYER!", "Got em!", "That's gotta hurt!"};
+
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(shutdownMessage[rand() % 4]));
     }
 }
 
