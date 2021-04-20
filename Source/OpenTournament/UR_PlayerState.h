@@ -6,8 +6,8 @@
 
 #include "GameFramework/PlayerState.h"
 #include "Interfaces/UR_TeamInterface.h"
-#include "UR_PlayerState.generated.h"
 #include <time.h>
+#include "UR_PlayerState.generated.h"
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 class AUR_PlayerState;
@@ -60,7 +60,7 @@ public:
     int32 MultiKillTick;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
-    time_t KillTime;
+    int32 KillTime;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
     int32 MaxMultiKill;

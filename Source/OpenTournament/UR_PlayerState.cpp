@@ -49,7 +49,7 @@ void AUR_PlayerState::AddKill(AController* Victim)
 {
     Kills++;
     MARK_PROPERTY_DIRTY_FROM_NAME(AUR_PlayerState, Kills, this);
-    //TODO: count multi kills here
+    //Handle Multikills here
     MultiKillTick++;
     if (MultiKillTick == 1)
         KillTime = time(NULL);
@@ -65,12 +65,31 @@ void AUR_PlayerState::AddKill(AController* Victim)
     }
     if (MultiKillTick > 1)
         MultiKills++;
-    //TODO: count sprees here
+    if (MultiKillTick == 2)
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Double Kill!"));
+    else if (MultiKillTick == 3)
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Triple Kill!"));
+    else if (MultiKillTick == 4)
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Ultra Kill!"));
+    else if (MultiKillTick == 5)
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Monster Kill!"));
+    //Handle Sprees here
     CurrentStreak++;
-    if (CurrentStreak == 3)
+    if (CurrentStreak == 3) {
         Sprees++;
-    //NOTE: can do "revenge" here
-    AUR_PlayerState * checkVictimSprees = Victim->GetPlayerState<class AUR_PlayerState>();
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("You're on a KILLING SPREE!"));
+    }
+    else if (CurrentStreak == 4) 
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("You're BLOODTHIRSTY!"));
+    else if (CurrentStreak == 5) 
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("You're DOMINATING!"));
+    else if (CurrentStreak >= 6) 
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("You're LEGENDARY!"));
+
+    if (CurrentStreak > MaxSpreeLength)
+        MaxSpreeLength = CurrentStreak;
+    //Handle Revenge here
+    /* * checkVictimSprees = Victim->GetPlayerState<class AUR_PlayerState>();
     if (checkVictimSprees->CurrentStreak >= 3) {
         Revenges++;
         //TODO: once player tags, and names have been fully implemented, and defined, get and display the killer, and victim's player names in the shutdown message
@@ -78,7 +97,7 @@ void AUR_PlayerState::AddKill(AController* Victim)
         FString shutdownMessage[4] = {"Their spree is OVER!", "KINGSLAYER!", "Got em!", "That's gotta hurt!"};
 
         GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(shutdownMessage[rand() % 4]));
-    }
+    }*/
 }
 
 void AUR_PlayerState::AddDeath(AController* Killer)
@@ -86,8 +105,6 @@ void AUR_PlayerState::AddDeath(AController* Killer)
     Deaths++;
     CurrentStreak = 0;
     MultiKillTick = 0;
-    if (CurrentStreak > MaxSpreeLength)
-        MaxSpreeLength = CurrentStreak;
 
     MARK_PROPERTY_DIRTY_FROM_NAME(AUR_PlayerState, Deaths, this);
 
