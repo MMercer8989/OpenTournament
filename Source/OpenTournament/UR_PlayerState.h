@@ -78,6 +78,9 @@ public:
     virtual void AddKill(AController* Victim);
 
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    virtual void CoverageTestKillStreaks();
+
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
     virtual void AddDeath(AController* Killer);
 
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
