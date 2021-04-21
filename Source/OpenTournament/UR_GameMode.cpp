@@ -323,10 +323,21 @@ bool AUR_GameMode::PreventDeath_Implementation(AController* Killed, AController*
 
 void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser) {
 
-    //get the local players name (this will be attached to the front of most death messages)
+    //set the local players name (this will be attached to the front of most death messages)
     FString playerName = "player"; //placeholder for now
-    FString victimName = Victim->GetName();;
-    FString killerName = Killer->GetName();
+    FString victimName;
+    FString killerName;
+
+    //make sure the Victim and Killer are not null first
+    //on the offchance that they are null just use a placeholder name
+    if (Victim != nullptr && Killer != nullptr) {
+        victimName = Victim->GetName();
+        killerName = Killer->GetName();
+    }
+    else {
+        victimName = "Unknown_Victim";
+        killerName = "Unknown_Killer";
+    }
 
     FString suicideMessage[5][5] = {
         {" blew themselves to bits", " got too close to the rockets", "'s head has been blown apart", " is now a smoldering pile of viscera", " has been GIBBED... by their own doing"}, //Rocket launcher Suicide messages
@@ -351,7 +362,6 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
     //depending on who the killer is
 
     if (!Killer || Killer == Victim) {
-
         //suicide messages go here
         if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
             GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[0][rand() % 4 + 0])));
@@ -395,36 +405,39 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
         }
     }
     else {
-
         //other
         GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(MiscKillMessage[rand() % 4 + 0])));
     }
 }
 
-void AUR_GameMode::CoverageTestDM() {
-    AController* Victim; //this must be defined before the tests can be implemented
-    AController* Killer; //this must be defined before the tests can be implemented
-    const FDamageEvent& DamageEvent = FDamageEvent();
-    AActor* DamageCauser; //this must be defined before the tests can be implemented
+void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser) {
 
     const FString dmgCauserArr[6] = { "BP_UR_Projectile_Rocket", "BP_UR_Projectile_Shotgun", "BP_UR_Projectile_CannonBall", "BP_UR_Projectile_EnergyBall", "BP_UR_Projectile_Grenade", "Stage_DMG"};
 
     //first tests: the killer is also the victim
-    //set the values for killer and victim here
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Starting DeathMessage coverage tests"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 1: A player is killed by their own attack"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
     for (int i = 0; i < 6; i++) {
         DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
-        DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
+        DeathMessage(Victim, Victim, DamageEvent, DamageCauser);
     }
 
     //second tests: The killer is not the victim
-    //set the values for killer and victim
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 2: A player is killed by someone else"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
     for (int i = 0; i < 6; i++) {
         DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
         DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
     }
 
     //third test: stage deaths
-    //set the values for killer and victim
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 3: The player is killed by the arena"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+    Killer = nullptr;
     for (int i = 0; i < 6; i++) {
         DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
         DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
@@ -434,7 +447,8 @@ void AUR_GameMode::CoverageTestDM() {
 
 void AUR_GameMode::PlayerKilled_Implementation(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser)
 {
-    DeathMessage(Victim, Killer, DamageEvent, DamageCauser); //call a function to display the public death messages
+    CoverageTestDM(Victim, Killer, DamageEvent, DamageCauser);//initiate the covrage test
+    //DeathMessage(Victim, Killer, DamageEvent, DamageCauser); //call a function to display the public death messages
     RegisterKill(Victim, Killer, DamageEvent, DamageCauser); 
 }
 

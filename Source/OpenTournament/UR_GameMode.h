@@ -151,7 +151,7 @@ public:
     /*
      Coverage test function for Death Messages
     */
-    void CoverageTestDM();
+    void CoverageTestDM(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser);
 
     /**
     * If PreventDeath returned false, this function is then called.
