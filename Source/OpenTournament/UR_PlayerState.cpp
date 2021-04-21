@@ -17,7 +17,6 @@
 #include <time.h>
 #include <EngineGlobals.h>
 #include <Runtime/Engine/Classes/Engine/Engine.h>
-#include <stdlib.h>
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_PlayerState::AUR_PlayerState()
@@ -92,64 +91,12 @@ void AUR_PlayerState::AddKill(AController* Victim)
    
 }
 
-void AUR_PlayerState::CoverageTestKillStreaks() {
-    // Test multikill messages, kill streak messages will print as well, but we are officially testing those further below
-    // Double kill
-    Kills += 2;
-    printf("Current kills in Multikill: %d debug message should print double kill", MultiKillTick);
-    // Triple kill
-    Kills += 3;
-    printf("Current kills in Multikill: %d debug message should print triple kill", MultiKillTick);
-    // Ultra kill
-    Kills += 4;
-    printf("Current kills in Multikill: %d debug message should print ultra kill", MultiKillTick);
-    // Monster kill
-    Kills += 5;
-    printf("Current kills in Multikill: %d debug message should print monster kill", MultiKillTick);
-    // Reset our streak via a death here to now expressly check streaks, and check shutdowns since we will be on a kill streak at this point
-    Deaths++;
-    // Should print 1 revenge at this point
-    printf("Should have a randomized shutdown message printed in debug messages, and our total revenges: %d", Revenges);
-    // Now increment kills slowly to view streak messages, and not just multikills (wait 5 seconds between kills)
-    Kills++;
-    _sleep(6000);
-    Kills++;
-    _sleep(6000);
-    // Killing Spree
-    Kills++;
-    _sleep(6000);
-    printf("Current kills in spree: %d debug message should print killing spree", CurrentStreak);
-    // Bloodthirsty
-    Kills++;
-    _sleep(6000);
-    printf("Current kills in spree: %d debug message should print bloodthirsty", CurrentStreak);
-    // Dominating
-    Kills++;
-    _sleep(6000);
-    printf("Current kills in spree: %d debug message should print dominating", CurrentStreak);
-    // Legendary
-    Kills++;
-    _sleep(6000);
-    printf("Current kills in spree: %d debug message should print legendary", CurrentStreak);
-    // Increment one more time to ensure continous print of legendary
-    Kills++;
-    _sleep(6000);
-    printf("Current kills in spree: %d debug message should print legendary", CurrentStreak);
-
-    // Now print our longest streak which should be 14
-    printf("Longest streak: %d", MaxSpreeLength);
-    // Our total number of sprees, which should be 2
-    printf("Total Sprees %d", Sprees);
-    // And our total number of multikills which should be 4
-    printf("Total Multikills: %d", MultiKills);
-}
 
 void AUR_PlayerState::AddDeath(AController* Killer)
 {
     Deaths++;
     CurrentStreak = 0;
     MultiKillTick = 0;
-    
     if (CurrentStreak >= 3) {
         //TODO: once player tags, and names have been fully implemented, and defined, get and display the killer name within the shutdown message
 
@@ -172,6 +119,76 @@ void AUR_PlayerState::AddSuicide()
 void AUR_PlayerState::AddScore(const int32 Value)
 {
     SetScore(GetScore() + Value);
+}
+
+void AUR_PlayerState::CoverageTestKillStreaks() {
+    AController* testDummy = nullptr;
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("We have entered the coverage test for killing sprees, shutdowns, and multikills"));
+    // Test multikill messages, kill streak messages will print as well, but we are officially testing those further below
+    // Double kill
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print double kill above me"));
+    AddKill(testDummy);
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    CurrentStreak = 0;
+    // Triple kill
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print triple kill, and misc. killing spree msgs above me"));
+    AddKill(testDummy);
+    AddKill(testDummy);
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    CurrentStreak = 0;
+    // Ultra kill
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print ultra kill, and misc. killing spree msgs above me"));
+    AddKill(testDummy);
+    AddKill(testDummy);
+    AddKill(testDummy);
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    CurrentStreak = 0;
+    // Monster kill
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print monster kill, and misc. killing spree msgs above me"));
+    AddKill(testDummy);
+    AddKill(testDummy);
+    AddKill(testDummy);
+    AddKill(testDummy);
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    CurrentStreak = 0;
+    // Reset our streak via a death here to now expressly check streaks
+    Deaths++;
+    // Should print 1 revenge at this point
+    // Now increment kills slowly to view streak messages, and not just multikills (reset multikill ticker between each kill)
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    // Killing Spree
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Should print killing spree above me"));
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    // Bloodthirsty
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Should print bloodthirsty above me"));
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    // Dominating
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Should print dominating above me"));
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    // Legendary
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Should print legendary above me"));
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    // Increment one more time to ensure continous print of legendary
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Should print legendary above me (yes I know we just tested this)"));
+    AddKill(testDummy);
+    MultiKillTick = 0;
+
+    /* README: Commented this line out, as initially this test function was being called in AddDeath, so a shutdown message would display upon exit
+       The code beneath this comment is good to be uncommented if you call this test coverage function in AddDeath again.
+    */
+
+    // GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Should print a random shutdown message here as we kick out into the addDeath function"));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
