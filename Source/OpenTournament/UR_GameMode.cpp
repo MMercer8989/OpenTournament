@@ -341,16 +341,16 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
 
     FString suicideMessage[5][5] = {
         {" blew themselves to bits", " got too close to the rockets", "'s head has been blown apart", " is now a smoldering pile of viscera", " has been GIBBED... by their own doing"}, //Rocket launcher Suicide messages
-        {" couldn't handle the flac cannon", ", flac cannons hurt dont they", " took a facefull of shrapnel", " has transitioned to swiss cheese"}, //Flac cannon suicide messages
-        {" has electrified themself", " has experienced unlimited power...", " has rode the lightning", " vaporized themself"}, //plasma gun suicide messages
-        {" just played around with their own grenade", " fragged themself", " thought it would be best to blow their arms off", " decided to eat a live grenade"}, //grenade launcher suicide messages
-        {" just gave up", " couldn't handle life", " said 'right, that's enough...'", " has had enough"} //generic suicide messages
+        {" couldn't handle the flac cannon", " now realizes that flac cannons hurt", " took a facefull of shrapnel", " has transitioned to swiss cheese", " looked too close down the barrel of their own flac cannon"}, //Flac cannon suicide messages
+        {" has electrified themself", " has experienced unlimited power...", " has rode the lightning", " vaporized themself", " has been seared"}, //Shock rifle suicide messages
+        {" just played around with their own grenade", " fragged themself", " thought it would be best to blow their arms off", " decided to eat a live grenade", " was next to their grenade when it blew up"}, //grenade launcher suicide messages
+        {" just gave up", " couldn't handle life", " said 'right, that's enough...'", " has had enough", " said 'oh no, this is horrible!!!'"} //generic suicide messages
     };
 
     FString StandardKillMessage[5][5] = {
         {" Just got fragged by ", " Just got their skull cleaved by a passing rocket thanks to ", " just got lit up by ", " couldn't outrun the rockets from ", " has been GIBBED by "}, //Rocket Launcher
         {" ate some flac, courtesy of ", " took on the flac cannon and lost thanks to ", " got filled full of holes by ", " just got dumpstered thanks to ", " has become swiss cheese thanks to "}, //Flac Cannon
-        {" has just been discombobulated by ", " has just been fried by ", " has been burnt to a crisp by ", " has been vaporized by ", " is now a smoldering pile of ash thanks to "}, //Plasma gun
+        {" has just been discombobulated by ", " has just been fried by ", " has been burnt to a crisp by ", " has been vaporized by ", " is now a smoldering pile of ash thanks to "}, //Shock rifle
         {" tripped over a grenade placed by ", " was dismembered thanks to ", " was ripped apart by a grenade thanks to ", " is now suffering from full body failure thanks to ", " has been bombed by "}, //grenade launcher
         {" just got fragged by ", " has been taken down by ", " has been filled full of hot lead by ", " has been killed by ", " has suffered defeat at the hands of "} //generic
 
@@ -361,52 +361,50 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
     //here we will place the death messages to be output to the screen, these should be split into a few different categories
     //depending on who the killer is
 
-    if (!Killer || Killer == Victim) {
-        //suicide messages go here
+    if (Killer == Victim) {
         if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[0][rand() % 4 + 0])));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[0][rand() % 5])));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Shotgun")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 4 + 0])));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 5])));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_CannonBall")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 4 + 0])));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[1][rand() % 5])));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_EnergyBall")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[2][rand() % 4 + 0])));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[2][rand() % 5])));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Grenade")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[3][rand() % 4 + 0])));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[3][rand() % 5])));
         }
         else {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[4][rand() % 4 + 0])));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[4][rand() % 5])));
         }
     }
     else if (Killer && Killer != Victim) {
-
         //regular kills
         if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[0][rand() % 4 + 0]).Append(killerName)));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[0][rand() % 5]).Append(killerName)));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Shotgun")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[1][rand() % 4 + 0]).Append(killerName)));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[1][rand() % 5]).Append(killerName)));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_CannonBall")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[1][rand() % 4 + 0]).Append(killerName)));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[1][rand() % 5]).Append(killerName)));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_EnergyBall")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[2][rand() % 4 + 0]).Append(killerName)));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[2][rand() % 5]).Append(killerName)));
         }
         else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Grenade")) {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[3][rand() % 4 + 0]).Append(killerName)));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[3][rand() % 5]).Append(killerName)));
         }
         else {
-            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[4][rand() % 4 + 0]).Append(killerName)));
+            GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[4][rand() % 5]).Append(killerName)));
         }
     }
-    else {
+    else if (!Killer && Victim){
         //other
-        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(MiscKillMessage[rand() % 4 + 0])));
+        GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(MiscKillMessage[rand() % 5])));
     }
 }
 
@@ -414,40 +412,38 @@ void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, cons
 
     const FString dmgCauserArr[6] = { "BP_UR_Projectile_Rocket", "BP_UR_Projectile_Shotgun", "BP_UR_Projectile_CannonBall", "BP_UR_Projectile_EnergyBall", "BP_UR_Projectile_Grenade", "Stage_DMG"};
 
+    //third test: stage deaths
+    for (int i = 0; i < 6; i++) {
+        DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
+        DeathMessage(Victim, nullptr, DamageEvent, DamageCauser);
+    }
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 3: The player is killed by the arena"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+
+    //second tests: The killer is not the victim
+    for (int i = 0; i < 6; i++) {
+        DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
+        DeathMessage(Victim, Killer, DamageEvent, DamageCauser);
+    }
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 2: A player is killed by someone else"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
+
     //first tests: the killer is also the victim
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Starting DeathMessage coverage tests"));
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 1: A player is killed by their own attack"));
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
     for (int i = 0; i < 6; i++) {
         DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
         DeathMessage(Victim, Victim, DamageEvent, DamageCauser);
     }
-
-    //second tests: The killer is not the victim
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 2: A player is killed by someone else"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 1: A player is killed by their own attack"));
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
-    for (int i = 0; i < 6; i++) {
-        DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
-        DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
-    }
-
-    //third test: stage deaths
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 3: The player is killed by the arena"));
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
-    Killer = nullptr;
-    for (int i = 0; i < 6; i++) {
-        DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
-        DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
-    }
-
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Starting DeathMessage coverage tests"));
 }
 
 void AUR_GameMode::PlayerKilled_Implementation(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser)
 {
-    CoverageTestDM(Victim, Killer, DamageEvent, DamageCauser);//initiate the covrage test
+    CoverageTestDM(Victim, Killer, DamageEvent, DamageCauser);//initiate the coverage test
     //DeathMessage(Victim, Killer, DamageEvent, DamageCauser); //call a function to display the public death messages
     RegisterKill(Victim, Killer, DamageEvent, DamageCauser); 
 }
