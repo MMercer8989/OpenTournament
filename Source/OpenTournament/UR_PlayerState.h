@@ -6,8 +6,8 @@
 
 #include "GameFramework/PlayerState.h"
 #include "Interfaces/UR_TeamInterface.h"
+#include <time.h>
 #include "UR_PlayerState.generated.h"
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 class AUR_PlayerState;
@@ -45,6 +45,30 @@ public:
     int32 Kills;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 Sprees;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 MaxSpreeLength;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 Revenges;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 MultiKills;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 MultiKillTick;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 KillTime;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 MaxMultiKill;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
+    int32 CurrentStreak;
+
+    UPROPERTY(Replicated, BlueprintReadOnly)
     int32 Deaths;
 
     UPROPERTY(Replicated, BlueprintReadOnly)
@@ -52,6 +76,9 @@ public:
 
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
     virtual void AddKill(AController* Victim);
+
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    virtual void CoverageTestKillStreaks();
 
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
     virtual void AddDeath(AController* Killer);
