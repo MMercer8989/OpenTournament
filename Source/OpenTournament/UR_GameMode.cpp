@@ -351,6 +351,7 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
     //depending on who the killer is
 
     if (!Killer || Killer == Victim) {
+
         //suicide messages go here
         if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
             GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(suicideMessage[0][rand() % 4 + 0])));
@@ -372,6 +373,7 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
         }
     }
     else if (Killer && Killer != Victim) {
+
         //regular kills
         if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
             GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(victimName.Append(StandardKillMessage[0][rand() % 4 + 0]).Append(killerName)));
@@ -393,9 +395,41 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
         }
     }
     else {
+
         //other
         GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(MiscKillMessage[rand() % 4 + 0])));
     }
+}
+
+void AUR_GameMode::CoverageTestDM() {
+    AController* Victim; //this must be defined before the tests can be implemented
+    AController* Killer; //this must be defined before the tests can be implemented
+    const FDamageEvent& DamageEvent = FDamageEvent();
+    AActor* DamageCauser; //this must be defined before the tests can be implemented
+
+    const FString dmgCauserArr[6] = { "BP_UR_Projectile_Rocket", "BP_UR_Projectile_Shotgun", "BP_UR_Projectile_CannonBall", "BP_UR_Projectile_EnergyBall", "BP_UR_Projectile_Grenade", "Stage_DMG"};
+
+    //first tests: the killer is also the victim
+    //set the values for killer and victim here
+    for (int i = 0; i < 6; i++) {
+        DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
+        DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
+    }
+
+    //second tests: The killer is not the victim
+    //set the values for killer and victim
+    for (int i = 0; i < 6; i++) {
+        DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
+        DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
+    }
+
+    //third test: stage deaths
+    //set the values for killer and victim
+    for (int i = 0; i < 6; i++) {
+        DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
+        DeathMessage(Killer, Victim, DamageEvent, DamageCauser);
+    }
+
 }
 
 void AUR_GameMode::PlayerKilled_Implementation(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser)

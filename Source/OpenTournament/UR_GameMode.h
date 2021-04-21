@@ -148,6 +148,11 @@ public:
     */
     void DeathMessage(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser);
 
+    /*
+     Coverage test function for Death Messages
+    */
+    void CoverageTestDM();
+
     /**
     * If PreventDeath returned false, this function is then called.
     * Since blueprint cannot choose specifically which Super() method to call,
