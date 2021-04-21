@@ -70,7 +70,7 @@ void AUR_PlayerState::AddKill(AController* Victim)
         GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Triple Kill!"));
     else if (MultiKillTick == 4)
         GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Ultra Kill!"));
-    else if (MultiKillTick == 5)
+    else if (MultiKillTick >= 5)
         GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Monster Kill!"));
     //Handle Sprees here
     CurrentStreak++;
@@ -132,32 +132,46 @@ void AUR_PlayerState::CoverageTestKillStreaks() {
     MultiKillTick = 0;
     CurrentStreak = 0;
     // Triple kill
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print triple kill, and misc. killing spree msgs above me"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print triple kill above me"));
     AddKill(testDummy);
     AddKill(testDummy);
+    CurrentStreak = 0;
     AddKill(testDummy);
     MultiKillTick = 0;
     CurrentStreak = 0;
     // Ultra kill
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print ultra kill, and misc. killing spree msgs above me"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print ultra kill above me"));
     AddKill(testDummy);
     AddKill(testDummy);
+    CurrentStreak = 0;
     AddKill(testDummy);
     AddKill(testDummy);
     MultiKillTick = 0;
     CurrentStreak = 0;
     // Monster kill
-    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print monster kill, and misc. killing spree msgs above me"));
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print monster kill above me"));
     AddKill(testDummy);
     AddKill(testDummy);
+    CurrentStreak = 0;
     AddKill(testDummy);
+    AddKill(testDummy);
+    CurrentStreak = 0;
+    AddKill(testDummy);
+    MultiKillTick = 0;
+    CurrentStreak = 0;
+    // Monster kill above 5 kills
+    GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("Debug message should print monster kill again above me"));
+    AddKill(testDummy);
+    AddKill(testDummy);
+    CurrentStreak = 0;
+    AddKill(testDummy);
+    AddKill(testDummy);
+    CurrentStreak = 0;
     AddKill(testDummy);
     AddKill(testDummy);
     MultiKillTick = 0;
     CurrentStreak = 0;
-    // Reset our streak via a death here to now expressly check streaks
-    Deaths++;
-    // Should print 1 revenge at this point
+    
     // Now increment kills slowly to view streak messages, and not just multikills (reset multikill ticker between each kill)
     AddKill(testDummy);
     MultiKillTick = 0;
