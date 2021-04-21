@@ -1,0 +1,35 @@
+# Group 13 - OpenTournament 
+| Team members: |
+|----------|
+| Matt Mercer |
+| Ryan Nicolai |
+| Daniel Curto |
+
+## User Stories
+| Story No. | Requirement |
+|-----------|-------------|
+| C4P-12 | As a player of open tournament, I would like increased interactivity / upgraded icons for user HUD so I can have an overall better, more complete experience with the game. |
+| C4P-8 | As an individual who works with, and upgrades the visuals of open tournament I would like to create a customization menu for HUD, and Weapon skins so I can have an easy to use layout to eventually customize my experience. |
+| C4P-44 | As a player of open tournament I want indication of players on killing sprees, and being shut down from killing sprees so the game can have a more rewarding/incentivizing interactions with kill streaks. |
+| C4P-47 | As a player of open tournament I would like different messages to be displayed upon kill for different weapons so I can enjoy a humorous interactive experience closer to other arena shooters. |
+| C4P-45 | As a developer of open tournament I would like the ability to test the functionality of the jump pads automatically, so I can ensure their functionality works properly in an efficient manner. |
+| C4P-46 | As a developer of open tournament I want more meaningful developer status messages displayed beyond a proof of concept design so that I can have more informative feedback while I am testing open tournament. |
+| C4P-48 | As a developer of open tournament I would like varying knockback values for weapons to be customized for each weapon so I can create a more unique feel for each weapon. |
+
+## Tasks in the backlog
+| Task No. | Title / Description | Assigned To |
+|----------|---------------------|-------------|
+| C4P-26 | Increase size of crosshairs for better visibility | Daniel Curto |
+| C4P-25 | Upgrade icons beyond basic pictures | Matt Mercer |
+| C4P-28 | Create custom crosshairs for the UI | Daniel Curto |
+| C4P-29 | Work on UI customization layout | Ryan Nicolai |
+| C4P-30 | Create Studio Menu | Ryan Nicolai |
+| C4P-31 | Add option to select studio menu | Matt Mercer |
+| C4P-56 | Add new death messages for when a player is killed by their own attacks | Matt Mercer |
+| C4P-54 | Create a list of damage each individual projectile/weapon can make | Daniel Curto |
+| C4P-49 | Create fields to track killing sprees, shutdowns, and multikills within UR_PlayerState.cpp | Ryan Nicolai |
+| C4P-50 | Create means to calculate, and track multikills, killing sprees, and shutdowns. Use Fields created by task C4P-49 to be populated | Ryan Nicolai |
+| C4P-52 | Display messages to user upon achieving a kill streak, multikill, or shutdown | Ryan Nicolai |
+| C4P-57 | Add new death messages for when a player is killed via stage hazzards | Matt Mercer |
+| C4P-53 | Fetch projectile/weapon's knockback value | Daniel Curto |
+| C4P-58 | Add new death messages for when a player is killed via another player | Matt Mercer |
