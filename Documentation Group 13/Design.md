@@ -29,3 +29,11 @@
 4/14/2021 - Commited changes to Weapon_Skins to make two small and 2 regular new skin options for the Pistol for more skin options for users to choose from than just the defaults.
 
 4/14/2021 - Commited changes to Weapon_Skins to make two small and 2 regular new skin options for the PlasmaRifle for more skin options for users to choose from than just the defaults.
+
+4/17/2021 - Committed changes to setup data fields for basic tracking of killing spree information between UR_PlayerState.h, and UR_PlayerState.cpp. Implemented some basic structuring of logic for said tracking
+
+4/18/2021 - Committed changes to track killing sprees, and for keeping track of the current spree user was on, longest spree etc within UR_PlayerState.cpp, took a first pass at writing logic to time, and keep track of multikills.
+
+4/19/2021 - Committed changes to properly display revenge, multikill, and killstreak messages, and fix some very minor logic bugs within UR_PlayerState.cpp. Declared a function for coverage testing within UR_PlayerState.cpp. 
+
+4/20/2021 - Finished correctly implementing, optimizing, and running the coverage test for this code all within UR_PlayerState.cpp. Also included a folder within our repo to contain screenshots of coverage tests running, and outputting correct output. Included a screenshot of my coverage test properly running
