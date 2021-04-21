@@ -17,7 +17,7 @@
 #include <time.h>
 #include <EngineGlobals.h>
 #include <Runtime/Engine/Classes/Engine/Engine.h>
-#include <string>
+#include <stdlib.h>
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_PlayerState::AUR_PlayerState()
@@ -93,7 +93,55 @@ void AUR_PlayerState::AddKill(AController* Victim)
 }
 
 void AUR_PlayerState::CoverageTestKillStreaks() {
+    // Test multikill messages, kill streak messages will print as well, but we are officially testing those further below
+    // Double kill
+    Kills += 2;
+    printf("Current kills in Multikill: %d debug message should print double kill", MultiKillTick);
+    // Triple kill
+    Kills += 3;
+    printf("Current kills in Multikill: %d debug message should print triple kill", MultiKillTick);
+    // Ultra kill
+    Kills += 4;
+    printf("Current kills in Multikill: %d debug message should print ultra kill", MultiKillTick);
+    // Monster kill
+    Kills += 5;
+    printf("Current kills in Multikill: %d debug message should print monster kill", MultiKillTick);
+    // Reset our streak via a death here to now expressly check streaks, and check shutdowns since we will be on a kill streak at this point
+    Deaths++;
+    // Should print 1 revenge at this point
+    printf("Should have a randomized shutdown message printed in debug messages, and our total revenges: %d", Revenges);
+    // Now increment kills slowly to view streak messages, and not just multikills (wait 5 seconds between kills)
+    Kills++;
+    _sleep(6000);
+    Kills++;
+    _sleep(6000);
+    // Killing Spree
+    Kills++;
+    _sleep(6000);
+    printf("Current kills in spree: %d debug message should print killing spree", CurrentStreak);
+    // Bloodthirsty
+    Kills++;
+    _sleep(6000);
+    printf("Current kills in spree: %d debug message should print bloodthirsty", CurrentStreak);
+    // Dominating
+    Kills++;
+    _sleep(6000);
+    printf("Current kills in spree: %d debug message should print dominating", CurrentStreak);
+    // Legendary
+    Kills++;
+    _sleep(6000);
+    printf("Current kills in spree: %d debug message should print legendary", CurrentStreak);
+    // Increment one more time to ensure continous print of legendary
+    Kills++;
+    _sleep(6000);
+    printf("Current kills in spree: %d debug message should print legendary", CurrentStreak);
 
+    // Now print our longest streak which should be 14
+    printf("Longest streak: %d", MaxSpreeLength);
+    // Our total number of sprees, which should be 2
+    printf("Total Sprees %d", Sprees);
+    // And our total number of multikills which should be 4
+    printf("Total Multikills: %d", MultiKills);
 }
 
 void AUR_PlayerState::AddDeath(AController* Killer)
