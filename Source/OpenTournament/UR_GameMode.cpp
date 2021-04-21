@@ -321,7 +321,7 @@ bool AUR_GameMode::PreventDeath_Implementation(AController* Killed, AController*
 * We have to be careful as Blueprints cannot choose specifically which Super() method to call.
 */
 
-void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser) {
+void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, AActor* DamageCauser) {
 
     //set the local players name (this will be attached to the front of most death messages)
     FString playerName = "player"; //placeholder for now
@@ -408,14 +408,14 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, const 
     }
 }
 
-void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser) {
+void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, AActor* DamageCauser) {
 
     const FString dmgCauserArr[6] = { "BP_UR_Projectile_Rocket", "BP_UR_Projectile_Shotgun", "BP_UR_Projectile_CannonBall", "BP_UR_Projectile_EnergyBall", "BP_UR_Projectile_Grenade", "Stage_DMG"};
 
     //third test: stage deaths
     for (int i = 0; i < 6; i++) {
         DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
-        DeathMessage(Victim, nullptr, DamageEvent, DamageCauser);
+        DeathMessage(Victim, nullptr, DamageCauser);
     }
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 3: The player is killed by the arena"));
@@ -424,7 +424,7 @@ void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, cons
     //second tests: The killer is not the victim
     for (int i = 0; i < 6; i++) {
         DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
-        DeathMessage(Victim, Killer, DamageEvent, DamageCauser);
+        DeathMessage(Victim, Killer, DamageCauser);
     }
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 2: A player is killed by someone else"));
@@ -433,7 +433,7 @@ void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, cons
     //first tests: the killer is also the victim
     for (int i = 0; i < 6; i++) {
         DamageCauser->SetActorLabel(dmgCauserArr[i]); //here we will go through the different damage types
-        DeathMessage(Victim, Victim, DamageEvent, DamageCauser);
+        DeathMessage(Victim, Victim, DamageCauser);
     }
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("**********************************************"));
     GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Blue, FString("Test 1: A player is killed by their own attack"));
@@ -443,8 +443,14 @@ void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, cons
 
 void AUR_GameMode::PlayerKilled_Implementation(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser)
 {
-    CoverageTestDM(Victim, Killer, DamageEvent, DamageCauser);//initiate the coverage test
-    //DeathMessage(Victim, Killer, DamageEvent, DamageCauser); //call a function to display the public death messages
+    //Note: when you want to run coverage tests for the DeathMessage function, make sure to un-comment the CoverageTestDM function call below
+    //and comment out the DeathMessages call below that.
+
+    //Note: It should also be noted that when the coverage test is ran you should select the sniper rifle and shoot the
+    //jumping character dummy for the best results.
+
+    //CoverageTestDM(Victim, Killer, DamageCauser); //initiate the coverage test
+    DeathMessage(Victim, Killer, DamageCauser); //call a function to display the public death messages
     RegisterKill(Victim, Killer, DamageEvent, DamageCauser); 
 }
 
