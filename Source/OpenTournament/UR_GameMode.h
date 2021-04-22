@@ -143,6 +143,16 @@ public:
     UFUNCTION(BlueprintNativeEvent)
     bool PreventDeath(AController* Victim, AController* Killer, const FDamageEvent& DamageEvent, AActor* DamageCauser);
 
+    /*
+     Display a message when a character is killed
+    */
+    void DeathMessage(AController* Victim, AController* Killer, AActor* DamageCauser);
+
+    /*
+     Coverage test function for Death Messages
+    */
+    void CoverageTestDM(AController* Victim, AController* Killer, AActor* DamageCauser);
+
     /**
     * If PreventDeath returned false, this function is then called.
     * Since blueprint cannot choose specifically which Super() method to call,
