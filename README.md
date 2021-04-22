@@ -6,6 +6,7 @@
 # TEST COVERAGE, AND IMPLEMENTATION:
 - Original coverage for UI changes made regarding icons etc is included in pull request reviews, as the UI changes would be viewed before the pull request is approved.
 This was done due to the fact it is very difficult to observe changes made to Uasset files within github itself.
+- Screenshots of test coverage actually running, and working can be found within the 'Coverage Test Screenshots' folder within the 'Group 13 Documentation' folder. These test coverage screenshots will pertain to all c++ branchs, and subsequent tasks/stories/pull requests associated with said branches.
 
 # NOTICE REGARDING UI_CUSTOMIZATION BRANCH:
 - Changes, and commits made to the UI_Customization branch were unable to be pulled to master. A pull request for the branch was made, and approved but due to a large number of 
