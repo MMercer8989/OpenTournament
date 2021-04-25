@@ -15,6 +15,7 @@
 | C4P-45 | As a developer of open tournament I would like the ability to test the functionality of the jump pads automatically, so I can ensure their functionality works properly in an efficient manner. |
 | C4P-46 | As a developer of open tournament I want more meaningful developer status messages displayed beyond a proof of concept design so that I can have more informative feedback while I am testing open tournament. |
 | C4P-48 | As a developer of open tournament I would like varying knockback values for weapons to be customized for each weapon so I can create a more unique feel for each weapon. |
+| C4P-64 | As a developer of OpenTournament, I would like to see the game's armor pickup, and removal behavior be improved so player interactions with armor are handled properly. |
 
 ## Tasks in the backlog
 | Task No. | Title / Description | Assigned To |
@@ -33,3 +34,11 @@
 | C4P-57 | Add new death messages for when a player is killed via stage hazzards | Matt Mercer |
 | C4P-53 | Fetch projectile/weapon's knockback value | Daniel Curto |
 | C4P-58 | Add new death messages for when a player is killed via another player | Matt Mercer |
+| C4P-65 | Implement proper condition checking when picking up armor | Daniel Curto |
+| C4P-66 | Implement proper removal of armor objects once they are picked up | Daniel Curto |
+| C4P-67 | Implement coverage testing for C4P-64 | Daniel Curto |
+| C4P-62 | Output debug information related to height when the player usesthe jump pad | Ryan Nicolai |
+| C4P-61 | Output debug information related to velocity and speed when the player uses the jump pad | Matt Mercer |
+| C4P-63 | Output the current state of the jump pad and any values associated with it | Matt Mercer |
+
+
