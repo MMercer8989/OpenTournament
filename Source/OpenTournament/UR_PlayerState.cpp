@@ -44,6 +44,19 @@ void AUR_PlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * \brief   The AddKill Function handles an AController player object achieving a 'kill'.
+ *
+ * \details This function increments the Kills field for the AController player object
+ *          and handles all of the logic to determine whether or not the kills being added
+ *          will put the player on a 'killstreak' or have them achieving a 'multikill'.
+ *          Furthermore this function will also print the relevant messages for a player
+ *          achieving any sort of killing spree or multikill, and record the necessary
+ *          data within this player objects' datafields.
+ *
+ * \param[in]     Victim    The AController player object being killed by THIS player object.
+ */
+
 void AUR_PlayerState::AddKill(AController* Victim)
 {
     Kills++;
@@ -91,6 +104,15 @@ void AUR_PlayerState::AddKill(AController* Victim)
    
 }
 
+/**
+ * \brief   This function will add a death to an Acontroller player object.
+ *
+ * \details This function increments the 'Deaths' datafield a passed AController
+ *          player object. It will also handle resetting their related killstreak
+ *          fields as well. 
+ *
+ * \param[in]     Killer    AController pointer object referencing the player who killed THIS player object
+ */
 
 void AUR_PlayerState::AddDeath(AController* Killer)
 {
@@ -120,6 +142,15 @@ void AUR_PlayerState::AddScore(const int32 Value)
 {
     SetScore(GetScore() + Value);
 }
+
+/**
+ * \brief   This function tests the functionality of all kill_streak messages code.
+ *
+ * \details This function will incrementally add kills, and deaths in such a way
+ *          all messages that have been implemented in the addKill function are
+ *          printed to the screen, and the kill_streak messages branch's code
+ *          can be proven to be functional.
+ */
 
 void AUR_PlayerState::CoverageTestKillStreaks() {
     AController* testDummy = nullptr;
