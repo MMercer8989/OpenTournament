@@ -31,6 +31,8 @@
 | C4P-49 | Create fields to track killing sprees, shutdowns, and multikills within UR_PlayerState.cpp | Ryan Nicolai |
 | C4P-50 | Create means to calculate, and track multikills, killing sprees, and shutdowns. Use Fields created by task C4P-49 to be populated | Ryan Nicolai |
 | C4P-52 | Display messages to user upon achieving a kill streak, multikill, or shutdown | Ryan Nicolai |
+| C4P-59 | Create a coverage test function that can be called within UR_PlayerState.cpp to test the functionality of C4P-44 | Ryan Nicolai |
+| C4P-60 | Create a method to run coverage tests for death message functionality | Matt Mercer |
 | C4P-57 | Add new death messages for when a player is killed via stage hazzards | Matt Mercer |
 | C4P-53 | Fetch projectile/weapon's knockback value | Daniel Curto |
 | C4P-58 | Add new death messages for when a player is killed via another player | Matt Mercer |
@@ -40,5 +42,6 @@
 | C4P-62 | Output debug information related to height when the player usesthe jump pad | Ryan Nicolai |
 | C4P-61 | Output debug information related to velocity and speed when the player uses the jump pad | Matt Mercer |
 | C4P-63 | Output the current state of the jump pad and any values associated with it | Matt Mercer |
+| C4P-68 | Add all necessary files, and comments to repo for doxygen to run | Ryan Nicolai |
 
 
