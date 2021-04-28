@@ -321,6 +321,20 @@ bool AUR_GameMode::PreventDeath_Implementation(AController* Killed, AController*
 * We have to be careful as Blueprints cannot choose specifically which Super() method to call.
 */
 
+/**
+ * \brief   DeathMessage function prints off a message based on the manner in which a player died.
+ *
+ * \details This function determines the manner by which a player died, including
+ *          'who' killed the player, i.e what other Acontroller object 'performed'
+ *           the kill. This function will then print off a humorous message based
+ *           on the damage causing the kill, i.e different weapons, and can even
+ *           print messages for the player committing suicide.
+ *
+ * \param[in]     Victim    A player AController object representing the player being 'killed'.
+ * \param[in]     Killer    A player AController object representing the player who is performing the kill.
+ * \param[in]     DamageCauser   An AActor object representing the source of damage, i.e from what weapon etc that damage is coming from.
+ */
+
 void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, AActor* DamageCauser) {
 
     //set the local players name (this will be attached to the front of most death messages)
@@ -407,6 +421,19 @@ void AUR_GameMode::DeathMessage(AController* Victim, AController* Killer, AActor
         GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString(playerName.Append(MiscKillMessage[rand() % 5])));
     }
 }
+
+/**
+ * \brief   The CoverageTestDm Function tests the functionality of the deathMessage function.
+ *
+ * \details This function runs through multiple different types of damage killing a player
+ *          object, as well as different player objects being that player object's killer,
+ *          including itself. This function will extensively, and thoroughly test the functionality
+ *          of the deathMessage function above.
+ *
+ * \param[in]     Victim    A player AController object representing the player being 'killed'.
+ * \param[in]     Killer    A player AController object representing the player who is performing the kill.
+ * \param[in]     DamageCauser   An AActor object representing the source of damage, i.e from what weapon etc that damage is coming from.
+ */
 
 void AUR_GameMode::CoverageTestDM(AController* Victim, AController* Killer, AActor* DamageCauser) {
 
