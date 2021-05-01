@@ -170,6 +170,12 @@ void AUR_Weapon::OnRep_Owner()
     CheckWeaponAttachment();
 }
 
+float AUR_Weapon::GetWeaponFeedback()
+{
+    float f = WeaponKnockBackValue;
+    return f;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Weapon Attachment
 

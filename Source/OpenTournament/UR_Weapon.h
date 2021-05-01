@@ -139,6 +139,9 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
     FString WeaponName;
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
+    float WeaponKnockBackValue;
+
     /**
     * Ammo classes used by this weapon.
     * Picking up weapon will stack ammo into all the classes declared here.
@@ -404,6 +407,9 @@ public:
 
     UFUNCTION(BlueprintPure)
     virtual bool HasAnyAmmo();
+
+    UFUNCTION(BlueprintCallable)
+    virtual float GetWeaponFeedback();
 
     //============================================================
     // Firemodes
