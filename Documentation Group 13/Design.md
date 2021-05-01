@@ -22,4 +22,7 @@
 | 4/18/2021 | Committed changes to track killing sprees, and for keeping track of the current spree user was on, longest spree etc within UR_PlayerState.cpp, took a first pass at writing logic to time, and keep track of multikills. |
 | 4/19/2021 | Committed changes to properly display revenge, multikill, and killstreak messages, and fix some very minor logic bugs within UR_PlayerState.cpp. Declared a function for coverage testing within UR_PlayerState.cpp. |
 | 4/20/2021 | Finished correctly implementing, optimizing, and running the coverage test for this code all within UR_PlayerState.cpp. Also included a folder within our repo to contain screenshots of coverage tests running, and outputting correct output. Included a screenshot of my coverage test properly running. |
+| 4/20/2021 | commited to the KnockBack branch to create a knockback field to enhance the user's experience.
 | 4/21/2021 | Created a .md file for our user stories and populated the document with all information in the previous .docx file, moved TEAM.md to be in the root directory, and updated the formatting and layout for all other documents. |
+| 4/30/2021 | commited to the KnockBack branch to implement the knockback value to tie everything together. |
+| 4/30/2021 | commited to the KnockBack branch to modify the knockback value to further enhance the user's experience. |
