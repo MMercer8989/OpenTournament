@@ -28,6 +28,9 @@
 #include "UR_InputComponent.h"
 #include "UR_UserSettings.h"
 
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 AUR_Character::AUR_Character(const FObjectInitializer& ObjectInitializer) :
@@ -739,7 +742,35 @@ float AUR_Character::TakeDamage(float Damage, FDamageEvent const& DamageEvent, A
     const float Falloff = Damage / OriginalDamage;
 
     // Calculate knockback power
-    float KnockbackPower = 1500.f * OriginalDamage * InventoryComponent->ActiveWeapon->GetWeaponFeedback();
+    float WeaponFeedbackValue = 1.2f;
+    float KnockbackPower = 1.0f;
+    if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Rocket")) {
+        WeaponFeedbackValue = 2.0f;
+     //   GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("The current KnockBackValue is 2.0f"));
+    }
+    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Shotgun")) {
+        WeaponFeedbackValue = 1.4f;
+     //   GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("The current KnockBackValue is 1.4f"));
+    }
+    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_CannonBall")) {
+        WeaponFeedbackValue = 1.3f;
+     //   GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("The current KnockBackValue is 1.3f"));
+    }
+    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_EnergyBall")) {
+        WeaponFeedbackValue = 1.0f;
+     //   GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("The current KnockBackValue is 1.0f"));
+    }
+    else if (DamageCauser->GetActorLabel().Contains("BP_UR_Projectile_Grenade")) {
+        WeaponFeedbackValue = 1.2f;
+     //   GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("The current KnockBackValue is 1.2f"));
+    }
+    else {
+        WeaponFeedbackValue = 1.1f;
+     //   GEngine->AddOnScreenDebugMessage(-1, 20.0f, FColor::Red, FString("The current KnockBackValue is 1.1f"));
+    }
+    KnockbackPower = 1500.f * OriginalDamage * WeaponFeedbackValue;
+
+     // InventoryComponent->ActiveWeapon->GetWeaponFeedback();
     KnockbackPower *= Falloff;
 
     // Gamemode hook

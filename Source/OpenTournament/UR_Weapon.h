@@ -138,6 +138,8 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
     FString WeaponName;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
     float WeaponKnockBackValue;
 
     /**
@@ -198,8 +200,6 @@ public:
 
     UFUNCTION(BlueprintPure, Category = "Weapon")
     USkeletalMeshComponent* GetVisibleMesh() const;
-
-    float GetWeaponFeedback();
 
     static UClass* GetNextFallbackConfigWeapon(TSubclassOf<AUR_Weapon> ForClass);
 
@@ -407,6 +407,9 @@ public:
 
     UFUNCTION(BlueprintPure)
     virtual bool HasAnyAmmo();
+
+    UFUNCTION(BlueprintCallable)
+    virtual float GetWeaponFeedback();
 
     //============================================================
     // Firemodes

@@ -13,7 +13,7 @@ AUR_Weap_RocketLauncher::AUR_Weap_RocketLauncher(const FObjectInitializer& Objec
     : Super(ObjectInitializer)
 {
     WeaponName = "Rocket Launcher";
-    WeaponKnockBackValue = 10000.f;
+    WeaponKnockBackValue = 1.f;
 
     ChargedFireMode = CreateDefaultSubobject<UUR_FireModeCharged>(TEXT("ChargedFireMode"));
     ChargedFireMode->Index = 1;

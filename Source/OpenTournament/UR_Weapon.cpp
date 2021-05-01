@@ -172,7 +172,7 @@ void AUR_Weapon::OnRep_Owner()
 
 float AUR_Weapon::GetWeaponFeedback()
 {
-    float f = 0.f;
+    float f = WeaponKnockBackValue;
     return f;
 }
 
